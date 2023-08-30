@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SearchStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/black</item>
+        <item name="colorOutline">@color/dark_brown</item>
+        <item name="thickness">100dp</item>
+    </style>
+</resources>

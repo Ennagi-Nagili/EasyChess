@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "800501880878",
+    "project_id": "easychess-396f2",
+    "storage_bucket": "easychess-396f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800501880878:android:cf0b895bdb98ebeb35a7bf",
+        "android_client_info": {
+          "package_name": "com.annaginagili.easychess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800501880878-djcd5rph2rl11t59pe9qo8vq65r98g8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.annaginagili.easychess",
+            "certificate_hash": "086f642f25a2368ef80eca183a37ccdb4fabdcd1"
+          }
+        },
+        {
+          "client_id": "800501880878-nh8f2ign7mqfdv054qbf88mfv9m742f1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPMnCLv9qx6qvMDShTaXIMa7xWODIZ10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800501880878-nh8f2ign7mqfdv054qbf88mfv9m742f1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.annaginagili.easychess.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragmentFragment"
+            app:destination="@id/loginFragmentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_whiteGameFragment"
+            app:destination="@id/whiteGameFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_blackGameFragment"
+            app:destination="@id/blackGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragmentFragment"
+        android:name="com.annaginagili.easychess.LoginFragment"
+        android:label="fragment_login_fragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragmentFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blackGameFragment"
+        android:name="com.annaginagili.easychess.BlackGameFragment"
+        android:label="fragment_black_game"
+        tools:layout="@layout/fragment_black_game">
+
+        <argument
+            android:name="gameId"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/whiteGameFragment"
+        android:name="com.annaginagili.easychess.WhiteGameFragment"
+        android:label="fragment_white_game"
+        tools:layout="@layout/fragment_white_game">
+
+        <argument
+            android:name="gameId"
+            app:argType="string"/>
+    </fragment>
+</navigation>
