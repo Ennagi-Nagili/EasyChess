@@ -5,4 +5,9 @@
         <item name="colorOutline">@color/dark_brown</item>
         <item name="thickness">100dp</item>
     </style>
+
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

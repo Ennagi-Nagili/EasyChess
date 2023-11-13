@@ -6,8 +6,11 @@ import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,153 +20,81 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.annaginagili.easychess.databinding.FragmentHomeBinding
+import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.storage.FirebaseStorage
+import java.util.Calendar
 import java.util.UUID
 
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
-    lateinit var button1: Button
-    lateinit var button2: Button
+    lateinit var viewModel: HomeFragmentViewModel
     lateinit var firestore: FirebaseFirestore
     lateinit var preferences: SharedPreferences
     lateinit var searchBar: TextInputEditText
     lateinit var searchButton: ImageButton
     lateinit var user: String
-    lateinit var id: TextView
+    lateinit var logout: ImageButton
+    lateinit var users: RecyclerView
+    lateinit var signInClient: GoogleSignInClient
+    lateinit var gso: GoogleSignInOptions
+    lateinit var profile: ShapeableImageView
+    private var imageUri: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater)
-        button1 = binding.button1
-        button2 = binding.button2
+        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
         firestore = FirebaseFirestore.getInstance()
         preferences = requireActivity().getSharedPreferences("EasyChess", Context.MODE_PRIVATE)
         searchBar = binding.searchBar
         searchButton = binding.searchButton
-        id = binding.id
+        logout = binding.logout
+        users = binding.users
+        profile = binding.profile
+
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.api_key)).requestEmail().build()
+        signInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        logout.setOnClickListener {
+            preferences.edit().putString("token", null).apply()
+            signInClient.signOut()
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragmentFragment())
+        }
+
+        profile.setOnClickListener {
+            firestore.collection("Users").document(user).get().addOnSuccessListener {
+                val us = User(imageUri, it.getString("username")!!, user)
+                findNavController().navigate(HomeFragmentDirections
+                    .actionHomeFragmentToSignUpFragment("0", us))
+            }
+        }
 
         if (preferences.getString("token", null) != null) {
             user = FirebaseAuth.getInstance().currentUser!!.uid
 
-            id.text = "User id: $user"
+            setUpObservers()
 
-            id.setOnClickListener {
-                val clipboard: ClipboardManager =
-                    requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(user, user)
-                clipboard.setPrimaryClip(clip)
-            }
-
-            val listener = firestore.collection("Users").document(user).addSnapshotListener { snapshot, e ->
-                if (e == null && snapshot != null) {
-                    if (snapshot.getString("currentGame") != null) {
-                        val gameId = snapshot.getString("currentGame")!!
-                        val builder = AlertDialog.Builder(requireContext())
-                        builder.setMessage("You have game request from " +
-                                snapshot.getString("opponent")).setCancelable(false)
-                            .setPositiveButton("Accept") { _, _ ->
-                                val piecesData = HashMap<String, ArrayList<Int?>>()
-                                val whitePieceArray = ArrayList<Int?>()
-                                val blackPieceArray = ArrayList<Int?>()
-
-                                for (i in Squares.pieceList) {
-                                    whitePieceArray.add(i)
-                                }
-
-                                for (i in Squares.pieceListBlack) {
-                                    blackPieceArray.add(i)
-                                }
-
-                                piecesData["whitePieces"] = whitePieceArray
-                                piecesData["blackPieces"] = blackPieceArray
-
-                                firestore.collection("Games").document(gameId).set(piecesData)
-                                    .addOnSuccessListener {
-                                    if (snapshot.getLong("side") == 0L) {
-                                        findNavController().navigate(HomeFragmentDirections
-                                            .actionHomeFragmentToWhiteGameFragment(gameId))
-                                    } else {
-                                        findNavController().navigate(HomeFragmentDirections
-                                            .actionHomeFragmentToBlackGameFragment(gameId))
-                                    }
-                                }
-                            }
-                            .setNegativeButton("Reject") { p0, _ ->
-                                p0.cancel()
-                                val data = HashMap<String, Any?>()
-                                data["currentGame"] = null
-                                data["opponent"] = null
-                                data["side"] = null
-                                firestore.collection("Users").document(user).update(data)
-                            }
-
-                        builder.create().show()
-                    }
-                }
-            }
+            users.setHasFixedSize(true)
+            users.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
             searchButton.setOnClickListener {
                 if (searchBar.text!!.isNotEmpty()) {
-                    firestore.collection("Users").document(searchBar.text.toString())
-                        .get().addOnSuccessListener {
-                            if (it.exists()) {
-                                if (it.getString("currentGame") == null) {
-                                    val data1 = HashMap<String, Any>()
-                                    val gameId = UUID.randomUUID()
-                                    data1["currentGame"] = gameId.toString()
-                                    data1["opponent"] = user
-                                    val side = kotlin.random.Random.nextInt(2)
-                                    data1["side"] = side
-                                    val data2 = HashMap<String, Any>()
-                                    data2["opponent"] = searchBar.text.toString()
-                                    data2["side"] = if (side == 0) {
-                                        1
-                                    } else {
-                                        0
-                                    }
-
-                                    firestore.collection("Users").document(searchBar.text.toString())
-                                        .update(data1)
-                                    firestore.collection("Users").document(user)
-                                        .update(data2)
-
-                                    firestore.collection("Games").document(gameId.toString())
-                                        .addSnapshotListener {snapshot, e ->
-                                            if (e == null && snapshot != null ) {
-                                                if (snapshot.exists()) {
-                                                    if (snapshot.getString("turn") == null &&
-                                                            snapshot.getString("winner") == null) {
-                                                        listener.remove()
-
-                                                        if (side == 0) {
-                                                            findNavController().navigate(HomeFragmentDirections
-                                                                .actionHomeFragmentToBlackGameFragment(gameId.toString()))
-                                                        } else {
-                                                            findNavController().navigate(HomeFragmentDirections
-                                                                .actionHomeFragmentToWhiteGameFragment(gameId.toString()))
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                }
-                                else {
-                                    Toast.makeText(requireContext(), "User is in game",
-                                        Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            else {
-                                Toast.makeText(requireContext(), "User can't found",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                    viewModel.sendGameRequest(user, searchBar.text.toString(), requireContext())
                 }
             }
         } else {
@@ -171,5 +102,46 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setUpObservers(){
+        viewModel.observeGame(user, requireContext()).observe(viewLifecycleOwner) {result ->
+            if (result["started"] == false) {
+                if (result["side"] == 0L) {
+                    val intent1 = Intent(activity, WhiteGameActivity::class.java)
+                    intent1.putExtra("gameId", result["gameId"].toString())
+                    startActivity(intent1)
+                } else if (result["side"] == 1L) {
+                    val intent1 = Intent(activity, BlackGameActivity::class.java)
+                    intent1.putExtra("gameId", result["gameId"].toString())
+                    startActivity(intent1)
+                }
+            }
+        }
+
+        viewModel.observeProfile(user).observe(viewLifecycleOwner) {uri ->
+            Glide.with(requireActivity()).load(uri).into(profile)
+            imageUri = uri
+        }
+
+        viewModel.observeAccept().observe(viewLifecycleOwner) {
+            if (it["started"] == false) {
+                if (it["side"] == 0) {
+                    val intent1 = Intent(activity, WhiteGameActivity::class.java)
+                    intent1.putExtra("gameId", it["gameId"].toString())
+                    startActivity(intent1)
+                    firestore.collection("Users").document(user).update("currentGame", it["gameId"].toString())
+                } else if (it["side"] == 1) {
+                    val intent1 = Intent(activity, BlackGameActivity::class.java)
+                    intent1.putExtra("gameId", it["gameId"].toString())
+                    startActivity(intent1)
+                    firestore.collection("Users").document(user).update("currentGame", it["gameId"].toString())
+                }
+            }
+        }
+
+        viewModel.observeUsers(user).observe(viewLifecycleOwner) { result ->
+            users.adapter = HistoryAdapter(requireContext(), result)
+        }
     }
 }

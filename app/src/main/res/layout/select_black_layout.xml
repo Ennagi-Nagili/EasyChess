@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/queen"
+        android:src="@drawable/b_queen_svg_noshadow"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/rook"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rook"
+        android:src="@drawable/b_rook_svg_noshadow"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toRightOf="@id/queen"
+        app:layout_constraintRight_toLeftOf="@id/knight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/knight"
+        android:src="@drawable/b_knight_svg_noshadow"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toRightOf="@id/rook"
+        app:layout_constraintRight_toLeftOf="@id/bishop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bishop"
+        android:src="@drawable/b_bishop_svg_noshadow"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toRightOf="@id/knight"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,7 @@
     <color name="dark_brown">#512a2a</color>
     <color name="dark_blue">#292F3F</color>
     <color name="soft_blue">#252836</color>
+    <color name="light_blue">#12CDD9</color>
+    <color name="purple">#615793</color>
+    <color name="green">#32D74B</color>
 </resources>

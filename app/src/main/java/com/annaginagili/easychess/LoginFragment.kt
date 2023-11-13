@@ -72,15 +72,20 @@ class LoginFragment : Fragment() {
 
     private fun firebaseAuth(idToken: String?) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                preferences.edit().putString("token", idToken).apply()
-                val data = HashMap<String, String?>()
-                data["currentGame"] = null
-                firestore.collection("Users").document(auth.currentUser!!.uid)
-                    .set(data).addOnSuccessListener {
-                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentFragmentToHomeFragment())
+                firestore.collection("Users").document(auth.currentUser!!.uid).get()
+                    .addOnSuccessListener {snapshot->
+                        if (snapshot.exists()) {
+                            preferences.edit().putString("token", idToken).apply()
+                            findNavController().navigate(LoginFragmentDirections.
+                            actionLoginFragmentFragmentToHomeFragment())
+                        }
+
+                        else {
+                            findNavController().navigate(LoginFragmentDirections.
+                            actionLoginFragmentFragmentToSignUpFragment(idToken!!, User(null, "", "")))
+                        }
                     }
             } else {
                 Log.e("hello", it.exception.toString())

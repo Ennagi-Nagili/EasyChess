@@ -14,11 +14,11 @@
             android:id="@+id/action_homeFragment_to_loginFragmentFragment"
             app:destination="@id/loginFragmentFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_whiteGameFragment"
-            app:destination="@id/whiteGameFragment" />
+            android:id="@+id/action_homeFragment_to_loginFragmentFragment2"
+            app:destination="@id/loginFragmentFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_blackGameFragment"
-            app:destination="@id/blackGameFragment" />
+            android:id="@+id/action_homeFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragmentFragment"
@@ -28,25 +28,24 @@
         <action
             android:id="@+id/action_loginFragmentFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragmentFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/blackGameFragment"
-        android:name="com.annaginagili.easychess.BlackGameFragment"
-        android:label="fragment_black_game"
-        tools:layout="@layout/fragment_black_game">
+        android:id="@+id/signUpFragment"
+        android:name="com.annaginagili.easychess.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up">
 
         <argument
-            android:name="gameId"
+            android:name="credential"
             app:argType="string"/>
-    </fragment>
-    <fragment
-        android:id="@+id/whiteGameFragment"
-        android:name="com.annaginagili.easychess.WhiteGameFragment"
-        android:label="fragment_white_game"
-        tools:layout="@layout/fragment_white_game">
-
         <argument
-            android:name="gameId"
-            app:argType="string"/>
+            android:name="user"
+            app:argType="com.annaginagili.easychess.User"/>
+        <action
+            android:id="@+id/action_signUpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

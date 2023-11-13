@@ -6,4 +6,10 @@
     <string name="type_user_id">Type user id</string>
     <string name="user_id">User id:</string>
     <string name="you_win">You Win</string>
+    <string name="simple_chess">Simple Chess</string>
+    <string name="online_players">Online Players</string>
+    <string name="username">Username</string>
+    <string name="sign_up">Sign up</string>
+    <string name="save">Save</string>
+    <string name="history">History</string>
 </resources>
