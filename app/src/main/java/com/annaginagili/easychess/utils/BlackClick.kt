@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.utils
 
 import android.widget.ImageView
 import com.annaginagili.easychess.databinding.ActivityBlackGameBinding

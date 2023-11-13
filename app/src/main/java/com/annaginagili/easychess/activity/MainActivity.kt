@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.activity
 
 import android.app.AlertDialog
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.home
 
 import android.app.AlertDialog
 import android.content.Context
@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.annaginagili.easychess.model.History
+import com.annaginagili.easychess.utils.Pieces
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import java.time.LocalDateTime
-import java.util.Calendar
 import java.util.UUID
 
 class HomeFragmentViewModel : ViewModel() {

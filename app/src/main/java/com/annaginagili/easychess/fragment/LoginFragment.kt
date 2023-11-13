@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.fragment
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,7 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.annaginagili.easychess.LoginFragmentDirections
+import com.annaginagili.easychess.R
 import com.annaginagili.easychess.databinding.FragmentLoginBinding
+import com.annaginagili.easychess.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -78,13 +81,16 @@ class LoginFragment : Fragment() {
                     .addOnSuccessListener {snapshot->
                         if (snapshot.exists()) {
                             preferences.edit().putString("token", idToken).apply()
-                            findNavController().navigate(LoginFragmentDirections.
-                            actionLoginFragmentFragmentToHomeFragment())
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentFragmentToHomeFragment())
                         }
 
                         else {
-                            findNavController().navigate(LoginFragmentDirections.
-                            actionLoginFragmentFragmentToSignUpFragment(idToken!!, User(null, "", "")))
+                            findNavController().navigate(
+                                LoginFragmentDirections.actionLoginFragmentFragmentToSignUpFragment(
+                                    idToken!!,
+                                    User(null, "", "")
+                                )
+                            )
                         }
                     }
             } else {

@@ -1,29 +1,25 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.home
 
-import android.R.attr.label
-import android.R.attr.text
-import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.annaginagili.easychess.activity.BlackGameActivity
+import com.annaginagili.easychess.utils.HistoryAdapter
+import com.annaginagili.easychess.HomeFragmentDirections
+import com.annaginagili.easychess.R
+import com.annaginagili.easychess.model.User
+import com.annaginagili.easychess.activity.WhiteGameActivity
 import com.annaginagili.easychess.databinding.FragmentHomeBinding
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,10 +29,6 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.storage.FirebaseStorage
-import java.util.Calendar
-import java.util.UUID
 
 
 class HomeFragment : Fragment() {
@@ -79,8 +71,12 @@ class HomeFragment : Fragment() {
         profile.setOnClickListener {
             firestore.collection("Users").document(user).get().addOnSuccessListener {
                 val us = User(imageUri, it.getString("username")!!, user)
-                findNavController().navigate(HomeFragmentDirections
-                    .actionHomeFragmentToSignUpFragment("0", us))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToSignUpFragment(
+                        "0",
+                        us
+                    )
+                )
             }
         }
 

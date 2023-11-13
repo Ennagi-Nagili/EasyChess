@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.annaginagili.easychess.HomeFragment"
+        android:name="com.annaginagili.easychess.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragmentFragment"
-        android:name="com.annaginagili.easychess.LoginFragment"
+        android:name="com.annaginagili.easychess.fragment.LoginFragment"
         android:label="fragment_login_fragment"
         tools:layout="@layout/fragment_login" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.annaginagili.easychess.SignUpFragment"
+        android:name="com.annaginagili.easychess.fragment.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
 
@@ -43,7 +43,7 @@
             app:argType="string"/>
         <argument
             android:name="user"
-            app:argType="com.annaginagili.easychess.User"/>
+            app:argType="com.annaginagili.easychess.model.User"/>
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

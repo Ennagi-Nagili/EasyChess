@@ -1,7 +1,6 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.activity
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -10,19 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.annaginagili.easychess.R
 import com.annaginagili.easychess.databinding.ActivityBlackGameBinding
 import com.annaginagili.easychess.databinding.WinLayoutBinding
+import com.annaginagili.easychess.utils.Pieces
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.text.DecimalFormat
-import java.util.Calendar
 
 class BlackGameActivity : AppCompatActivity() {
     lateinit var binding: ActivityBlackGameBinding

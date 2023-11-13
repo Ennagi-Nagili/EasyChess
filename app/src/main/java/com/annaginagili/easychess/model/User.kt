@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.model
 
 import android.net.Uri
 import java.io.Serializable

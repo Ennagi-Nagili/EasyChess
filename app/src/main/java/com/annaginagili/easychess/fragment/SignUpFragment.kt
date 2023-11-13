@@ -1,4 +1,4 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.fragment
 
 import android.content.SharedPreferences
 import android.net.Uri
@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.annaginagili.easychess.SignUpFragmentArgs
+import com.annaginagili.easychess.SignUpFragmentDirections
 import com.annaginagili.easychess.databinding.FragmentSignUpBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
@@ -77,12 +79,10 @@ class SignUpFragment : Fragment() {
                         if (uri != null) {
                             reference.child(auth.currentUser!!.uid).child("profile")
                                 .putFile(uri!!).addOnSuccessListener {
-                                    findNavController().navigate(SignUpFragmentDirections
-                                        .actionSignUpFragmentToHomeFragment())
+                                    findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                                 }
                         } else {
-                            findNavController().navigate(SignUpFragmentDirections
-                                .actionSignUpFragmentToHomeFragment())
+                            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                         }
                     }
             }

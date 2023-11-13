@@ -1,10 +1,12 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.utils
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.annaginagili.easychess.R
 import com.annaginagili.easychess.databinding.HistoryLayoutBinding
+import com.annaginagili.easychess.model.History
 
 class HistoryAdapter(private val context: Context, private val itemList: List<History>):
     RecyclerView.Adapter<HistoryAdapter.ItemHolder>() {

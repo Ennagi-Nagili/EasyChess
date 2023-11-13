@@ -1,4 +1,6 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.utils
+
+import com.annaginagili.easychess.R
 
 object Squares {
     val squareList = listOf(

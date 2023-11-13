@@ -1,7 +1,8 @@
-package com.annaginagili.easychess
+package com.annaginagili.easychess.utils
 
 import android.util.Log
 import android.widget.ImageView
+import com.annaginagili.easychess.R
 import com.annaginagili.easychess.databinding.ActivityBlackGameBinding
 import com.annaginagili.easychess.databinding.ActivityWhiteGameBinding
 import kotlin.math.ceil
@@ -25,17 +26,30 @@ object Pieces {
         return BlackClick.setClick(binding)
     }
 
-    val whitePieces = listOf(R.drawable.w_rook_svg_noshadow, R.drawable.w_knight_svg_noshadow,
+    val whitePieces = listOf(
+        R.drawable.w_rook_svg_noshadow, R.drawable.w_knight_svg_noshadow,
         R.drawable.w_bishop_svg_noshadow, R.drawable.w_queen_svg_noshadow,
-        R.drawable.w_king_svg_noshadow, R.drawable.w_pawn_svg_noshadow)
-    val blackPieces = listOf(R.drawable.b_rook_svg_noshadow, R.drawable.b_knight_svg_noshadow,
+        R.drawable.w_king_svg_noshadow, R.drawable.w_pawn_svg_noshadow
+    )
+    val blackPieces = listOf(
+        R.drawable.b_rook_svg_noshadow, R.drawable.b_knight_svg_noshadow,
         R.drawable.b_bishop_svg_noshadow, R.drawable.b_queen_svg_noshadow,
-        R.drawable.b_king_svg_noshadow, R.drawable.b_pawn_svg_noshadow)
-    val allPieces = listOf(R.drawable.w_rook_svg_noshadow, R.drawable.w_knight_svg_noshadow,
-        R.drawable.w_bishop_svg_noshadow, R.drawable.w_queen_svg_noshadow,
-        R.drawable.w_king_svg_noshadow, R.drawable.w_pawn_svg_noshadow, R.drawable.b_rook_svg_noshadow,
-        R.drawable.b_knight_svg_noshadow, R.drawable.b_bishop_svg_noshadow,
-        R.drawable.b_queen_svg_noshadow, R.drawable.b_king_svg_noshadow, R.drawable.b_pawn_svg_noshadow)
+        R.drawable.b_king_svg_noshadow, R.drawable.b_pawn_svg_noshadow
+    )
+    val allPieces = listOf(
+        R.drawable.w_rook_svg_noshadow,
+        R.drawable.w_knight_svg_noshadow,
+        R.drawable.w_bishop_svg_noshadow,
+        R.drawable.w_queen_svg_noshadow,
+        R.drawable.w_king_svg_noshadow,
+        R.drawable.w_pawn_svg_noshadow,
+        R.drawable.b_rook_svg_noshadow,
+        R.drawable.b_knight_svg_noshadow,
+        R.drawable.b_bishop_svg_noshadow,
+        R.drawable.b_queen_svg_noshadow,
+        R.drawable.b_king_svg_noshadow,
+        R.drawable.b_pawn_svg_noshadow
+    )
 
     private val bishopTopRight = listOf(-9, -18, -27, -36, -45, -54, -63)
     private val bishopTopLeft = listOf(-7, -14, -21, -28, -35, -42, -49)
@@ -165,10 +179,14 @@ object Pieces {
     fun getMoves(piece: Int): List<List<Int>> {
         val rookSteps = listOf(rookTop, rookLeft, rookRight, rookBottom)
         val bishopSteps = listOf(bishopBottomLeft, bishopBottomRight, bishopTopLeft, bishopTopRight)
-        val queenSteps = listOf(rookTop, rookLeft, rookRight, rookBottom, bishopBottomLeft,
-            bishopBottomRight, bishopTopLeft, bishopTopRight)
-        val kingSteps = listOf(kingBottom, kingTop, kingTopLeft, kingRight, kingTopLeft,
-            kingBottomLeft, kingTopRight, kingBottomRight)
+        val queenSteps = listOf(
+            rookTop, rookLeft, rookRight, rookBottom, bishopBottomLeft,
+            bishopBottomRight, bishopTopLeft, bishopTopRight
+        )
+        val kingSteps = listOf(
+            kingBottom, kingTop, kingTopLeft, kingRight, kingTopLeft,
+            kingBottomLeft, kingTopRight, kingBottomRight
+        )
         val pawnSteps = listOf(pawnAttack)
         val knightSteps = listOf(knightAll)
 
