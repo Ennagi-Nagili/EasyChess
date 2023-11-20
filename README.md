@@ -31,6 +31,8 @@ request and game play systems are made with firestore's snapshot listener. So us
 # APK File
 https://drive.google.com/file/d/1bpHnKDenljSEnRrcmFVfplglpUJ2F6EQ/view?usp=sharing
 
+You can download app drom this link. When you click this link it will redirect you to google drive. You can download file just by clicking download button on the top-right of screen. It will download apk file to your phone. After you can find this file in your device's "Downloads" directory. When you click file it will require permission to download app. If you give permission app will be downloaded to your device. Now you can use app in your device just like others.
+
 # Author
 Full name: Ənnağı Nağılı
 
